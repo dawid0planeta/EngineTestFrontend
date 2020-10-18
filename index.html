@@ -3,6 +3,8 @@
         <link rel="stylesheet" href="index.css">
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+<script src="https://unpkg.com/vue-chartjs/dist/vue-chartjs.min.js"></script>
         <script src="jquery-csv.js"></script>
     </head>
     <body>
@@ -10,6 +12,9 @@
         <div id="app">
             <label class="text-reader">Choose Sensor Ids file
                 <input type="file" @change="loadSensorIds">
+            </label>
+            <label class="text-reader">Choose Sensor Data file
+                <input type="file" @change="loadSensorData">
             </label>
             <div id=sensorTable v-if="idsLoaded">
                 <table>
@@ -22,15 +27,24 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr is="sensor"
-                            @newdata="handleSensorData($event)"
-                            v-for="sensor in sensorData"
+                        <tr is="sensorComp"
+                            @new-params="handleSensorIds($event)"
+                            v-for="sensor in sensorIds"
                             v-bind:sensor="sensor"
                             v-bind:key="sensor.id">
                         </tr>
                     </tbody>
                 </table>
+                <button v-on:click="computeSensorData">Save params</button>
             </div>
+            <ul v-if=dataComputed>
+                <li is="line-chart"
+                    v-for="sensor in sensorIds"
+
+                    v-bind:sensor="sensor"
+                    v-bind:key="sensor.id"
+                ></li>
+            </ul>
         </div>
         <script src="index.js"></script>
         
