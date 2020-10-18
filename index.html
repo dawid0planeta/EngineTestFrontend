@@ -2,14 +2,35 @@
     <head>
         <link rel="stylesheet" href="index.css">
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <script src="jquery-csv.js"></script>
     </head>
     <body>
      
         <div id="app">
-            <label class="text-reader">
-                Read File
-                <input type="file" @change="loadTextFromFile">
+            <label class="text-reader">Choose Sensor Ids file
+                <input type="file" @change="loadSensorIds">
             </label>
+            <div id=sensorTable v-if="idsLoaded">
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Sensor Id</td>
+                            <td>Sensor Name</td>
+                            <td>Sensor a param</td>
+                            <td>Sensor b param</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr is="sensor"
+                            @newdata="handleSensorData($event)"
+                            v-for="sensor in sensorData"
+                            v-bind:sensor="sensor"
+                            v-bind:key="sensor.id">
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <script src="index.js"></script>
         

@@ -1,4 +1,46 @@
 html, body {
     margin: 5px;
     padding: 0;
+    width: 100%;
+}
+
+/* ol {
+    list-style: none;
+}
+
+#sensor {
+    list-style: none;
+    text-align: center;
+    clear: both;
+}
+#sensor #sensorId {
+    float: left;
+}
+
+#sensor #sensorName {
+    float: left;
+} */
+
+#sensorTable {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+  
+table {
+    max-width: 100%;
+}
+  
+tr:nth-child(odd) {
+    background-color: #eee;
+}
+  
+th {
+    background-color: #555;
+    color: #fff;
+}
+  
+th, td {
+    text-align: left;
+    padding: 0.5em 1em;
 }
