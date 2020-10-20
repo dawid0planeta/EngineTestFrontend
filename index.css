@@ -29,6 +29,7 @@ html, body {
     align-items: center;
     
 }
+
 #buttons-cont {
     display: flex;
     justify-content: center;
@@ -68,8 +69,6 @@ input[type="file"] {
     transition-timing-function: line;
     color: #1e1e1e;
 }
-
-
 
 
 #sensorTable {
@@ -164,7 +163,3 @@ input[type=number] {
     width: 90%;
     justify-content: center;
 }
-
-#charts-cont ul li {
-}
-
