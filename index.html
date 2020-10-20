@@ -1,25 +1,31 @@
 <html>
     <head>
-        <link rel="stylesheet" href="index.css">
-        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
         <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
 <script src="https://unpkg.com/vue-chartjs/dist/vue-chartjs.min.js"></script>
         <script src="jquery-csv.js"></script>
+        <link rel="stylesheet" href="index.css">
     </head>
     <body>
      
         <div id="app">
-            <label class="text-reader">Choose Sensor Ids file
-                <input type="file" @change="loadSensorIds">
-            </label>
-            <label class="text-reader">Choose Sensor Data file
-                <input type="file" @change="loadSensorData">
-            </label>
-            <div id=sensorTable v-if="idsLoaded">
+            <div id="file-chooser">
+                <p id="buttons-desc">Choose files for analysis:</p>
+                <div id="buttons-cont">
+                    <label class="text-reader" id="id-file">IDS
+                        <input type="file" @change="loadSensorIds">
+                    </label>
+                    <label class="text-reader" id="data-file">DATA
+                        <input type="file" @change="loadSensorData">
+                    </label>
+                </div>
+            </div>
+           <div id=sensorTable v-if="isIdsFileLoaded">
                 <table>
                     <thead>
-                        <tr>
+                        <tr id="table-head">
                             <td>Sensor Id</td>
                             <td>Sensor Name</td>
                             <td>Sensor a param</td>
@@ -27,25 +33,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr is="sensorComp"
-                            @new-params="handleSensorIds($event)"
+                        <tr is="sensor-comp"
+                            @new-params="updateSensorParams($event)"
                             v-for="sensor in sensorIds"
-                            v-bind:sensor="sensor"
+                            v-bind:sensor-prop="sensor"
                             v-bind:key="sensor.id">
                         </tr>
                     </tbody>
                 </table>
-                <button v-on:click="computeSensorData">Save params</button>
+                <button id="save-params-button" v-on:click="computeSensorData">SAVE</button>
             </div>
-            <ul v-if=dataComputed>
-                <li is="line-chart"
-                    v-for="sensor in sensorIds"
-
-                    v-bind:sensor="sensor"
-                    v-bind:key="sensor.id"
-                ></li>
-            </ul>
-        </div>
+            <div v-if=isDataComputed id="charts-cont">
+                <ul>
+                    <li is="line-chart"
+                        v-for="sensor in sensorIds"
+                        v-bind:data="computedSensorData"
+                        v-bind:sensor="sensor"
+                        v-bind:key="sensor.id"
+                    ></li>
+                </ul>
+            </div>
+       </div>
         <script src="index.js"></script>
         
     </body>
